@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>order-confirmation page</title>
+<link rel="stylesheet"  href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">
+                <a href="{{url_for('home')}}"><img src="static/images/logo.png"  ></a>
+            </div>
+            <nav>
+                <ul id="MenuItems">
+                <li><a href="{{url_for('home')}}">Home</a></li>
+                <li><a href="{{url_for('product')}}">Products</a></li>
+                <li><a href="{{url_for('contact')}}">Contact</a></li>
+                    {% if session.get('username') %}
+
+<!--                    <li>-->
+<!--                        Welcome {{ session['username'] }}-->
+<!--                    </li>-->
+
+                    <li>
+                        <a href="{{ url_for('logout') }}">
+                            Logout
+                        </a>
+                    </li>
+
+                    {% else %}
+
+                    <li>
+                        <a href="{{ url_for('account') }}">
+                            Account
+                        </a>
+                    </li>
+
+                    {% endif %}
+
+                </ul>
+            </nav>
+           <a href="{{url_for('cart')}}"><img src="static/images/cart.png" width="50px" ></a>
+           <img src="static/images/menu.png" class="menu-icon" onclick="menutoggle()" >
+        </div>
+    </div>
+
+
+
+
+        <div class="confirm-box">
+        
+            <h1>✔ Order Placed Successfully!</h1>
+        
+            <p>Thank you for shopping with <strong>For Her Store</strong>.</p>
+        
+            <p class="order-id">Order ID: #FH20260702</p>
+        
+            <p>You will receive a confirmation email shortly.</p>
+        
+            <p>Estimated Delivery: 3–5 Business Days</p>
+        
+            <a href="{{url_for('home')}}" class="btn">Continue Shopping</a>
+        
+        </div>
+        
+
+
+    <!-- ----------Footer--------------- -->
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="footer-col-1">
+                <h3>Download Our App</h3>
+                <p>Download App For Android and ios Mobile Phone.</p>
+                <div class="app-logo">
+                <img src="static/images/play-store.png">
+                <img src="static/images/app-store.png">
+            </div>
+            </div>
+            <div class="footer-col-3">
+                <h3>Useful Links:</h3>
+                <ul>
+                    <li>Coupons</li>
+                    <li>Blog Post</li>
+                    <li>Return Policy</li>
+                    <li>Join Afiiliate</li>
+                </ul>
+            </div>
+            <div class="footer-col-4">
+                <h3>Follow Us:</h3>
+                <ul>
+                    <li>Facebook</li>
+                    <li>Twitter</li>
+                    <li>Instagram</li>
+                    <li>Youtube</li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+        <p class="copyright">Copyright 2026 - ForHer Store</p>
+    </div>
+</div>
+<!------- Js for toggle menu------------  -->
+<script>
+var MenuItems = document.getElementById("MenuItems");
+MenuItems.style.maxHeight = "0px";
+function menutoggle(){
+    
+    if(MenuItems.style.maxHeight == "0px")
+    {
+      MenuItems.style.maxHeight = "200px";  
+    }
+    else
+        {
+        MenuItems.style.maxHeight = "0px";  
+        }
+}
+</script>
+
+
+
+
+</body>
+</html>

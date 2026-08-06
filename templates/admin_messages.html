@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Messages</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+window.addEventListener("pageshow", function(event) {
+    if (event.persisted) {
+        window.location.reload();
+    }
+});
+</script>
+    <script>
+    window.addEventListener("pageshow", function(event) {
+        if (event.persisted) {
+            window.location.reload();
+        }
+    });
+</script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1 style="text-align:center; margin:40px 0;">
+        Customer Messages
+    </h1>
+
+
+    {% if messages %}
+
+        {% for msg in messages %}
+
+        <div style="
+            border:1px solid #ccc;
+            padding:20px;
+            margin-bottom:20px;
+            border-radius:10px;
+        ">
+
+            <h3>{{ msg['name'] }}</h3>
+
+            <p>
+                <b>Email:</b>
+                {{ msg['email'] }}
+            </p>
+
+            <p>
+                <b>Subject:</b>
+                {{ msg['subject'] }}
+            </p>
+
+            <p>
+                <b>Message:</b>
+                {{ msg['message'] }}
+            </p>
+
+            <small>
+                {{ msg['created_at'] }}
+            </small>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <h3 style="text-align:center;">
+            No messages yet.
+        </h3>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

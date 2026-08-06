@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Add Product</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+<script>
+window.addEventListener("pageshow", function(event) {
+    if (event.persisted) {
+        window.location.reload();
+    }
+});
+</script>
+</head>
+
+
+<body>
+
+<div class="container">
+
+<h1>Add New Product</h1>
+
+
+<form method="POST" enctype="multipart/form-data">
+
+
+<input type="text"
+name="name"
+placeholder="Product Name"
+required>
+
+
+<input type="number"
+name="price"
+placeholder="Price"
+required>
+
+
+<label>
+Product Image
+</label>
+
+<input type="file"
+name="image"
+accept="image/*"
+required>
+
+
+<textarea
+name="description"
+placeholder="Product description">
+</textarea>
+
+
+<label>
+<input type="checkbox" name="has_size">
+Product has size
+</label>
+
+
+<button class="btn" type="submit">
+Add Product
+</button>
+
+
+</form>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"  href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    
+    <title>For Her website</title>
+</head>
+<body>
+    <div class="header">
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">
+               <a href="{{url_for('home')}}"> <img src="{{ url_for('static', filename='images/logo.png') }}"></a>
+            </div>
+            <nav>
+                <ul id="MenuItems">
+                    <li><a href="{{url_for('home')}}">Home</a></li>
+                    <li><a href="{{url_for('product')}}">Products</a></li>
+
+                    <li><a href="{{url_for('contact')}}">Contact Us</a></li>
+                    {% if session.get('username') %}
+
+<!--                    <li style="color:red;">-->
+<!--                        Welcome {{ session['username'] }}-->
+<!--                    </li>-->
+
+                    <li>
+                        <a href="{{ url_for('logout') }}">
+                            Logout
+                        </a>
+                    </li>
+
+                    {% else %}
+
+                    <li>
+                        <a href="{{ url_for('account') }}">
+                            Account
+                        </a>
+                    </li>
+
+                    {% endif %}
+
+                </ul>
+            </nav>
+           <a href="{{url_for('cart')}}"><img src="static/images/cart.png" width="50px"></a>
+           <img src="static/images/menu.png" class="menu-icon" onclick="menutoggle()" >
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <h1>Give Yourself <br> A New style!</h1>
+                <p>Let's go girlllllssss.....</p>
+                <a href="{{url_for('product')}}" class="btn">Explore Now &#10139;</a>
+            </div>
+            <div class="col-2">
+                <img src="static/images/mascara.png">
+            </div>
+            
+        </div>
+
+
+
+
+    </div>
+</div>
+
+<!-- Categories -->
+<div class="carousel-container">
+    <!-- Hidden Radio Buttons to Track Active Slide -->
+    <input type="radio" name="carousel-control" id="slide-1" checked hidden>
+    <input type="radio" name="carousel-control" id="slide-2" hidden>
+    <input type="radio" name="carousel-control" id="slide-3" hidden>
+  
+    <!-- Slide Wrapper Track -->
+    <div class="carousel-track">
+      
+      <!-- Slide 1 -->
+      <div class="carousel-slide">
+        <div class="image-side">
+          <img src="static/images/body_lotion.jpg" alt="body lotion">
+        </div>
+        <div class="text-side">
+          <h2>Nivea Body Lotion</h2>
+          <p>Get 20% off your purchase.</p>
+        </div>
+      </div>
+  
+      <!-- Slide 2 -->
+      <div class="carousel-slide">
+        <div class="image-side">
+          <img src="static/images/cream.jpg" alt="cream">
+        </div>
+        <div class="text-side">
+          <h2>Cream</h2>
+          <p>Get 10% off on your purchase.</p>
+        </div>
+      </div>
+  
+      <!-- Slide 3 -->
+      <div class="carousel-slide">
+        <div class="image-side">
+          <img src="static/images/face_toner.jpg" alt="Face Toner">
+        </div>
+        <div class="text-side">
+          <h2>Face Toner</h2>
+          <p>Get 10% coupon code of this purchase.</p>
+        </div>
+      </div>
+  
+    </div>
+  
+    <!-- Navigation Arrows -->
+    <div class="carousel-controls">
+      <div class="control-set s1-controls">
+        <label for="slide-3" class="prev-btn">&#10094;</label>
+        <label for="slide-2" class="next-btn">&#10095;</label>
+      </div>
+      <div class="control-set s2-controls">
+        <label for="slide-1" class="prev-btn">&#10094;</label>
+        <label for="slide-3" class="next-btn">&#10095;</label>
+      </div>
+      <div class="control-set s3-controls">
+        <label for="slide-2" class="prev-btn">&#10094;</label>
+        <label for="slide-1" class="next-btn">&#10095;</label>
+      </div>
+    </div>
+  
+    <!-- Navigation Dots -->
+    <div class="carousel-dots">
+      <label for="slide-1" class="dot-btn id-dot-1"></label>
+      <label for="slide-2" class="dot-btn id-dot-2"></label>
+      <label for="slide-3" class="dot-btn id-dot-3"></label>
+    </div>
+  </div>
+  <!-------- Featured Products----------- -->
+   <div class="small-container">
+        <h2 class="title">Featured Products</h2>
+        <div class="row">
+            <div class="col-4">
+               <a href="{{url_for('product_details',id=1)}}"><img src="static/images/product-1.jpg"></a>
+               <a href="{{url_for('product_details',id=1)}}"><h4>Red Printed Tshirt</h4></a>
+                <div class="rating">
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+                <p>$10.00</p>
+            </div>
+            <div class="col-4">
+                <a href="{{url_for('product_details',id=2)}}"><img src="static/images/earing.jpg"></a>
+                <a href="{{url_for('product_details',id=2)}}"><h4>Tulip Earring</h4></a>
+                <div class="rating">
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star-half-o"></i>
+                </div>
+                <p>$30.00</p>
+            </div>
+        
+            <div class="col-4">
+                <a href="{{url_for('product_details',id=3)}}"><img src="static/images/necklace.jpg"> </a>
+                <a href="{{url_for('product_details',id=3)}}"><h4>Anaavri Necklace</h4></a>
+                <div class="rating">
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star"></i>
+                </div>
+                <p>$20.00</p>
+            </div>
+            
+            
+        </div>
+        <!-- ------Latest Products----------- -->
+        <h2 class="title">LatestProducts</h2>
+        <div class="row">
+            <div class="col-4">
+                <a href="{{url_for('product_details',id=4)}}"><img src="static/images/breacelate.jpg"></a>
+                <a href="{{url_for('product_details',id=4)}}"><h4>Bnnar's Bracelate</h4></a>
+                <div class="rating">
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star-half-o" ></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+                <p>$25.00</p>
+            </div>
+            <div class="col-4">
+                <a href="{{url_for('product_details',id=5)}}"><img src="static/images/hair_serum.jpg" height="350px" width="80px"></a>
+                <a href="{{url_for('product_details',id=5)}}"><h4>Hair Serum</h4></a>
+                <div class="rating">
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star-half-o"></i>
+                </div>
+                <p>$34.00</p>
+            </div>
+        
+            <div class="col-4">
+                <a href="{{url_for('product_details',id=6)}}"><img src="static/images/product-1.jpg"> </a>
+                <a href="{{url_for('product_details',id=6)}}"><h4>Nima Tshirt</h4></a>
+                <div class="rating">
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star-o" ></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+                <p>$26.00</p>
+            </div>
+            <div class="col-4">
+                <a href="{{url_for('product_details',id=7)}}"><img src="static/images/garnier_serum.jpg"> </a>
+                <a href="{{url_for('product_details',id=7)}}"><h4>Garnier Hair Serum</h4></a>
+                <div class="rating">
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star-o" ></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+                <p>$40.00</p>
+            </div>
+            <div class="col-4">
+                <a href="{{url_for('product_details',id=8)}}"><img src="static/images/cream.jpg" > </a>
+                <a href="{{url_for('product_details',id=8)}}"><h4>Cetaphil Cream</h4></a>
+                <div class="rating">
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star"></i>
+                </div>
+                <p>$25.00</p>
+            </div>
+            <div class="col-4">
+                <a href="{{url_for('product_details',id=9)}}"><img src="static/images/product-2.jpg"> </a>
+                <a href="{{url_for('product_details',id=9)}}"><h4>Black shoes </h4></a>
+                <div class="rating">
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star-o" ></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+                <p>$80.00</p>
+            </div>
+            <div class="col-4">
+                <a href="{{url_for('product_details',id=10)}}"><img src="static/images/tshirt-3.jpg"></a>
+
+                 <a href="{{url_for('product_details',id=10)}}"><h4>BeesTshirt </h4></a>
+                <div class="rating">
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star-o" ></i>
+                    <i class="fa fa-star-o" ></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+                <p>$22.00</p>
+            </div>
+            <div class="col-4">
+                <a href="{{url_for('product_details',id=11)}}"><img src="static/images/product-4.jpg"> </a>
+                <a href="{{url_for('product_details',id=11)}}"><h4>Wexan Tshirt </h4></a>
+
+                <div class="rating">
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+                <p>$32.00</p>
+            </div>
+        </div>
+   </div>
+    <!-- Offer -->
+    <div class="offer">
+        <div class="small-container">
+            <div class="row">
+                <div class="col-2">
+                   <a href="{{url_for('product_details',id=2)}}"> <img src="static/images/trans_earing.png" class="rotate-img"></a>
+                </div>
+                <div class="col-2">
+                    <p>Exclusively Available On Site.</p>
+                    <h1>Blue Butterfly Earing</h1>
+                    <small>This is very lightweight earing that you can wear it all day without hesitation.</small>
+                    <a href="{{url_for('product_details',id=2)}}" class="btn">Buy Now &#8594;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+     <!-- ------------Testimonial------------ -->
+      <div class="testimonial">
+        <div class="small-container">
+            <div class="row">
+                <div class="col-3">
+                    <i class="fa fa-quote-left" ></i>
+                    <p>Beautifully designed and functions flawlessly. 10/10.</p>
+                    
+                    <div class="rating">
+                        <i class="fa fa-star" ></i>
+                        <i class="fa fa-star" ></i>
+                        <i class="fa fa-star" ></i>
+                        <i class="fa fa-star-half-o" ></i>
+                        <i class="fa fa-star-o"></i>
+                    </div>
+                    <img src="static/images/user-1.png">
+                    <h3>John Doe</h3>
+                </div>
+                <div class="col-3">
+                    <i class="fa fa-quote-left" ></i>
+                    <p>Best purchase I've made all year. Worth every single penny!</p>
+                    <div class="rating">
+                        <i class="fa fa-star" ></i>
+                        <i class="fa fa-star" ></i>
+                        <i class="fa fa-star" ></i>
+                        <i class="fa fa-star" ></i>
+                        <i class="fa fa-star"></i>
+                    </div>
+                    <img src="static/images/user-2.png">
+                    <h3> samayra R.</h3>
+                </div>
+                <div class="col-3">
+                    <i class="fa fa-quote-left" ></i>
+                    <p>Exceeded all expectations. Shipping was incredibly fast too.</p>
+                    <div class="rating">
+                        <i class="fa fa-star" ></i>
+                        <i class="fa fa-star" ></i>
+                        <i class="fa fa-star" ></i>
+                        <i class="fa fa-star" ></i>
+                        <i class="fa fa-star-half-o"></i>
+                    </div>
+                    <img src="static/images/user-3.png">
+                    <h3>Chloe T.</h3>
+                </div>
+            </div>
+        </div>
+      </div>
+      <!-- ----------Footer--------------- -->
+       <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="footer-col-1">
+                        <h3>Download Our App</h3>
+                        <p>Download App For Android and ios Mobile Phone.</p>
+                        <div class="app-logo">
+                        <img src="static/images/play-store.png">
+                        <img src="static/images/app-store.png">
+                    </div>
+                    </div>
+                    <div class="footer-col-3">
+                        <h3>Useful Links:</h3>
+                        <ul>
+                            <li>Coupons</li>
+                            <li>Blog Post</li>
+                            <li>Return Policy</li>
+                            <li>Join Afiiliate</li>
+                        </ul>
+                    </div>
+                    <div class="footer-col-4">
+                        <h3>Follow Us:</h3>
+                        <ul>
+                            <li>Facebook</li>
+                            <li>Twitter</li>
+                            <li>Instagram</li>
+                            <li>Youtube</li>
+                        </ul>
+                    </div>
+                </div>
+                <hr>
+                <p class="copyright">Copyright 2026 - ForHer Store</p>
+            </div>
+       </div>
+       <!------- Js for toggle menu------------  -->
+       <script>
+        var MenuItems = document.getElementById("MenuItems");
+        MenuItems.style.maxHeight = "0px";
+        function menutoggle(){
+            
+            if(MenuItems.style.maxHeight == "0px")
+            {
+              MenuItems.style.maxHeight = "200px";  
+            }
+            else
+                {
+                MenuItems.style.maxHeight = "0px";  
+                }
+        }
+       </script>
+</body>
+</html>

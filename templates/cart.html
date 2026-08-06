@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"  href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    
+    <title>cart - For Her website</title>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">
+                <a href="{{url_for('home')}}"><img src="{{ url_for('static', filename='images/logo.png') }}"></a>
+            </div>
+            <nav>
+                <ul id="MenuItems">
+                    <li><a href="{{url_for('home')}}">Home</a></li>
+                    <li><a href="{{url_for('product')}}">Products</a></li>
+
+                    <li><a href="{{url_for('contact')}}">Contact</a></li>
+                    {% if session.get('username') %}
+
+<!--                    <li>-->
+<!--                        Welcome {{ session['username'] }}-->
+<!--                    </li>-->
+
+                    <li>
+                        <a href="{{ url_for('logout') }}">
+                            Logout
+                        </a>
+                    </li>
+
+                    {% else %}
+
+                    <li>
+                        <a href="{{ url_for('account') }}">
+                            Account
+                        </a>
+                    </li>
+
+                    {% endif %}
+
+                </ul>
+            </nav>
+           <a href="{{url_for('cart')}}"><img src="static/images/cart.png" width="50px" ></a>
+           <img src="static/images/menu.png" class="menu-icon" onclick="menutoggle()" >
+        </div>
+    </div>
+
+<!-------------cart items details -------------- ---- -->
+<div class="small-container cart-page">
+
+
+   <p id="empty-cart-message" style="display:none; text-align:center; margin:20px;">
+    Your cart is empty. No items added yet.</p>
+
+
+    <table id="cart-table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody id="cart-items"></tbody>
+    </table>
+
+
+
+        <div class="checkout-btn" id="checkout-btn">
+            <a href="{{url_for('check_out')}}" class="btn"> Checkout &#8594;</a>
+        </div>
+    </div>
+
+
+
+      <!-- ----------Footer--------------- -->
+       <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="footer-col-1">
+                        <h3>Download Our App</h3>
+                        <p>Download App For Android and ios Mobile Phone.</p>
+                        <div class="app-logo">
+                        <img src="static/images/play-store.png">
+                        <img src="static/images/app-store.png">
+                    </div>
+                    </div>
+                    <div class="footer-col-3">
+                        <h3>Useful Links:</h3>
+                        <ul>
+                            <li>Coupons</li>
+                            <li>Blog Post</li>
+                            <li>Return Policy</li>
+                            <li>Join Afiiliate</li>
+                        </ul>
+                    </div>
+                    <div class="footer-col-4">
+                        <h3>Follow Us:</h3>
+                        <ul>
+                            <li>Facebook</li>
+                            <li>Twitter</li>
+                            <li>Instagram</li>
+                            <li>Youtube</li>
+                        </ul>
+                    </div>
+                </div>
+                <hr>
+                <p class="copyright">Copyright 2026 - ForHer Store</p>
+            </div>
+       </div>
+       <!------- Js for toggle menu------------  -->
+       <script>
+        var MenuItems = document.getElementById("MenuItems");
+        MenuItems.style.maxHeight = "0px";
+        function menutoggle(){
+            
+            if(MenuItems.style.maxHeight == "0px")
+            {
+              MenuItems.style.maxHeight = "200px";  
+            }
+            else
+                {
+                MenuItems.style.maxHeight = "0px";  
+                }
+        }
+       </script>
+
+
+
+<!-- js for image and remove button -->
+ <script>
+    
+function loadCart() {
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    let container = document.getElementById("cart-items");
+    let emptyMessage = document.getElementById("empty-cart-message");
+    let cartTable = document.getElementById("cart-table");
+    let checkoutBtn = document.getElementById("checkout-btn");
+
+    let subtotal = 0;   // <-- ADD THIS
+
+    container.innerHTML = "";
+
+    if (cart.length === 0) {
+
+        cartTable.style.display = "none";
+        emptyMessage.style.display = "block";
+        checkoutBtn.style.display = "none";
+
+        return;
+
+    } else {
+
+        cartTable.style.display = "table";
+        emptyMessage.style.display = "none";
+        checkoutBtn.style.display = "block";
+
+    }
+    cart.forEach((item, index) => {
+
+        console.log(item.image);
+
+        let total = item.price * item.quantity;
+        subtotal += total;
+
+        container.innerHTML += `
+        <tr>
+            <td>
+                <div style="display:flex; align-items:center; gap:10px;">
+
+                    <img src="/static/${item.image}" width="70" height="70">
+
+                    <div>
+                        <p>${item.name} ${item.size ? "(" + item.size + ")" : ""}</p>
+                        <small>Price: $${item.price}</small>
+                        <br>
+                        <button onclick="removeItem(${index})" style="
+                            background:red;
+                            color:white;
+                            border:none;
+                            padding:5px 10px;
+                            border-radius:5px;
+                            cursor:pointer;
+                        ">Remove</button>
+                    </div>
+
+                </div>
+            </td>
+
+            <td>
+                <input type="number" value="${item.quantity}"
+                onchange="updateQty(${index}, this.value)">
+            </td>
+
+            <td>$${total.toFixed(2)}</td>
+
+        </tr>
+        `;
+    });
+
+
+<!--    document.getElementById("subtotal").innerText = "$" + subtotal.toFixed(2);-->
+<!--    document.getElementById("tax").innerText = "$" + (subtotal * 0.13).toFixed(2);-->
+<!--    document.getElementById("total").innerText = "$" + (subtotal * 1.13).toFixed(2);-->
+
+}
+
+
+function removeItem(index) {
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    cart.splice(index, 1);
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    loadCart();
+
+}
+
+
+function updateQty(index, qty) {
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    cart[index].quantity = parseInt(qty);
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    loadCart();
+
+}
+
+
+loadCart();
+
+<!--document.getElementById("paymentButton").addEventListener("click", function () {-->
+
+<!--    let cart = JSON.parse(localStorage.getItem("cart")) || [];-->
+
+<!--    if (cart.length === 0) {-->
+<!--        alert("Your cart is empty!");-->
+<!--        return;-->
+<!--    }-->
+
+<!--    fetch("/create-checkout-session", {-->
+
+<!--        method: "POST",-->
+
+<!--        headers: {-->
+<!--            "Content-Type": "application/json"-->
+<!--        },-->
+
+<!--        body: JSON.stringify({-->
+<!--            cart: cart-->
+<!--        })-->
+
+<!--    })-->
+
+<!--    .then(response => response.json())-->
+
+<!--    .then(data => {-->
+<!--        window.location.href = data.url;-->
+<!--    });-->
+
+<!--});-->
+
+
+
+</script>
+
+
+</body>
+</html>

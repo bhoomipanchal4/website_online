@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Edit Product</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+    <script>
+window.addEventListener("pageshow", function(event) {
+    if (event.persisted) {
+        window.location.reload();
+    }
+});
+</script>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+<h1>Edit Product</h1>
+
+
+<form method="POST">
+
+
+<input type="text"
+name="name"
+value="{{ product['name'] }}"
+required>
+
+
+<input type="number"
+name="price"
+value="{{ product['price'] }}"
+required>
+
+
+<input type="text"
+name="image"
+value="{{ product['image'] }}"
+required>
+
+
+<textarea name="description">{{ product['description'] }}</textarea>
+
+
+<label>
+
+<input type="checkbox"
+name="has_size"
+{% if product['has_size'] %}
+checked
+{% endif %}
+>
+
+Product has size
+
+</label>
+
+
+<button class="btn" type="submit">
+Update Product
+</button>
+
+
+</form>
+
+
+</div>
+
+</body>
+
+</html>

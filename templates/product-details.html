@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"  href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    
+    <title>product-details page - For Her website</title>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">
+                <a href="{{url_for('home')}}"><img src="{{ url_for('static', filename='images/logo.png') }}"></a>
+            </div>
+            <nav>
+                <ul id="MenuItems">
+                    <li><a href="{{url_for('home')}}">Home</a></li>
+                    <li><a href="{{url_for('product')}}">Products</a></li>
+                    <li><a href="{{url_for('contact')}}">Contact</a></li>
+                    {% if session.get('username') %}
+
+<!--                    <li>-->
+<!--                        Welcome {{ session['username'] }}-->
+<!--                    </li>-->
+
+                    <li>
+                        <a href="{{ url_for('logout') }}">
+                            Logout
+                        </a>
+                    </li>
+
+                    {% else %}
+
+                    <li>
+                        <a href="{{ url_for('account') }}">
+                            Account
+                        </a>
+                    </li>
+
+                    {% endif %}
+
+                </ul>
+            </nav>
+           <a href="{{url_for('cart')}}"><img src="static/images/cart.png" width="50px" ></a>
+           <img src="{{ url_for('static', filename='images/cart.png') }}" class="menu-icon" onclick="menutoggle()" >
+        </div>
+    </div>
+<!----------single product details---------------  -->
+
+<div class="small-container single-product">
+    <div class="row">
+
+        <div class="col-2">
+            <img  id="ProductImg" src="{{ url_for('static', filename=product['image']) }}" width="50%">
+<!--            <img src="{{ url_for('static', filename=product.image) }}" id="ProductImg" width="50%">-->
+        </div>
+
+        <div class="col-2">
+            <h1>{{ product['name'] }}</h1>
+
+            <h4>${{ product['price'] }}</h4>
+
+            <p>{{ product['description'] }}</p>
+
+<!--            <p >{{product.desc}}></p>-->
+<!--            <h1>{{product.name}}</h1>-->
+<!--            <h4>$ {{product.price}}</h4>-->
+
+            <select id="size">
+                <option value="">Select Size</option>
+                <option value="XXL">XXL</option>
+                <option value="XL">XL</option>
+                <option value="L">L</option>
+                <option value="M">M</option>
+                <option value="S">S</option>
+            </select>
+
+            <button class="btn" onclick="addToCart()">
+                Add to Cart
+            </button>
+
+            <p id="productDesc"></p>
+
+        </div>
+
+    </div>
+</div>
+
+<!---------title -------- -->
+<div class="small-container">
+    <div class="row row-2">
+        <h2>Related Products</h2>
+        <a href="{{url_for('product')}}"> View More</a>
+    </div>
+</div>
+
+
+
+
+<!------products--------------  -->
+
+
+   <div class="small-container">
+        
+       <div class="row">
+            <div class="col-4">
+                <img src="static/images/breacelate.jpg">
+                <h4>Rosy Bracelate</h4>
+                <div class="rating">
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+                <p>$10.00</p>
+            </div>
+            <div class="col-4">
+                <img src="static/images/earing.jpg">
+                <h4>Tulip Earring</h4>
+                <div class="rating">
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star-half-o"></i>
+                </div>
+                <p>$30.00</p>
+            </div>
+        <!-- </div> -->
+        
+            <div class="col-4">
+                <img src="static/images/tshirt-1.jpg">
+                <h4>Bnnar's Tshirt</h4>
+                <div class="rating">
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star-half-o" ></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+                <p>$25.00</p>
+            </div>
+            <div class="col-4">
+                <img src="static/images/hair_serum.jpg" height="350px" width="80px">
+                <h4>Hair Serum</h4>
+                <div class="rating">
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star" ></i>
+                    <i class="fa fa-star-half-o"></i>
+                </div>
+                <p>$34.00</p>
+            </div>
+        
+            
+        </div>
+       
+
+        </div>
+
+   
+    
+      <!-- ----------Footer--------------- -->
+       <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="footer-col-1">
+                        <h3>Download Our App</h3>
+                        <p>Download App For Android and ios Mobile Phone.</p>
+                        <div class="app-logo">
+                        <img src="static/images/play-store.png">
+                        <img src="static/images/app-store.png">
+                    </div>
+                    </div>
+                    <div class="footer-col-3">
+                        <h3>Useful Links:</h3>
+                        <ul>
+                            <li>Coupons</li>
+                            <li>Blog Post</li>
+                            <li>Return Policy</li>
+                            <li>Join Afiiliate</li>
+                        </ul>
+                    </div>
+                    <div class="footer-col-4">
+                        <h3>Follow Us:</h3>
+                        <ul>
+                            <li>Facebook</li>
+                            <li>Twitter</li>
+                            <li>Instagram</li>
+                            <li>Youtube</li>
+                        </ul>
+                    </div>
+                </div>
+                <hr>
+                <p class="copyright">Copyright 2026 - ForHer Store</p>
+            </div>
+       </div>
+       <!------- Js for toggle menu------------  -->
+       <script>
+        var MenuItems = document.getElementById("MenuItems");
+        MenuItems.style.maxHeight = "0px";
+        function menutoggle(){
+            
+            if(MenuItems.style.maxHeight == "0px")
+            {
+              MenuItems.style.maxHeight = "200px";  
+            }
+            else
+                {
+                MenuItems.style.maxHeight = "0px";  
+                }
+        }
+       </script>
+
+
+
+<!------- js for product gallery---------  -->
+    <script>
+        var ProductImg = document.getElementById("ProductImg")
+        var SmallImg = document.getElementsByClassName("small-img")
+            SmallImg[0].onclick = function()
+                {
+                    ProductImg.src = SmallImg[0].src;
+                }
+            SmallImg[1].onclick = function()
+                {
+                    ProductImg.src = SmallImg[1].src;
+                }
+            SmallImg[2].onclick = function()
+                {
+                    ProductImg.src = SmallImg[2].src;
+                }
+            SmallImg[3].onclick = function()
+                {
+                    ProductImg.src = SmallImg[3].src;
+                }
+
+
+    </script>
+
+<script>
+const product = {
+    name: "{{ product['name'] }}",
+    price: {{ product['price'] }},
+    image: "{{ product['image'] }}",
+    hasSize: {{ product['has_size'] | tojson }}
+};
+</script>
+
+
+
+
+
+
+
+
+
+<!--js for add_product.html to cart  -->
+<script>
+    function addToCart() {
+    
+        let size = "";
+    
+        // Check size only if product requires it
+        if (product.hasSize) {
+            size = document.getElementById("size").value;
+    
+            if (size === "") {
+                alert("Please select a size");
+                return;
+            }
+        }
+    
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    
+        let existingItem = cart.find(item =>
+            item.name === product.name && item.size === size
+        );
+    
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cart.push({
+                name: product.name,
+                price: product.price,
+                size: size,
+                quantity: 1,
+                image: product.image
+            });
+        }
+    
+        localStorage.setItem("cart", JSON.stringify(cart));
+    
+        console.log(cart);
+        alert("Added to cart!");
+    }
+    </script>
+
+<!-----Add product database----  -->
+<!--<script>-->
+
+<!--const urlParams = new URLSearchParams(window.location.search);-->
+<!--const productId = urlParams.get("id");-->
+
+<!--const product = products[productId];-->
+
+<!--document.getElementById("productName").innerText = product.name;-->
+<!--document.getElementById("productPrice").innerText = "$" + product.price;-->
+<!--document.getElementById("ProductImg").src = product.image;-->
+<!--document.getElementById("productDesc").innerText = product.desc;-->
+
+<!--const size = document.getElementById("size");-->
+
+<!--if (!product.hasSize) {-->
+<!--    size.style.display = "none";-->
+<!--}-->
+
+<!--</script>-->
+</body>
+</html>

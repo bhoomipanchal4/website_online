@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+window.addEventListener("pageshow", function(event) {
+    if (event.persisted) {
+        window.location.reload();
+    }
+});
+</script>
+    <script>
+    window.addEventListener("pageshow", function(event) {
+        if (event.persisted) {
+            window.location.reload();
+        }
+    });
+</script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1 style="text-align:center; margin:40px 0;">
+        For Her Admin Dashboard
+    </h1>
+
+
+    <div class="row">
+
+        <div class="col-2">
+            <h2>Messages</h2>
+            <p>View customer inquiries.</p>
+
+            <a href="{{ url_for('admin_messages') }}"
+               class="btn">
+                View Messages
+            </a>
+        </div>
+
+
+        <div class="col-2">
+            <h2>Products</h2>
+            <p>Add, edit, and remove products.</p>
+
+            <a href="{{ url_for('admin_products') }}"
+               class="btn">
+                Manage Products
+            </a>
+        </div>
+
+
+    </div>
+
+
+    <br><br>
+
+    <a href="{{ url_for('admin_logout') }}">
+        Logout
+    </a>
+
+
+</div>
+
+</body>
+
+</html>

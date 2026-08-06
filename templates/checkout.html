@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout</title>
+<link rel="stylesheet"  href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">
+                <a href="{{url_for('home')}}"><img src="{{ url_for('static', filename='images/logo.png') }}"></a>
+            </div>
+            <nav>
+                <ul id="MenuItems">
+                    <li><a href="{{url_for('home')}}">Home</a></li>
+                    <li><a href="{{url_for('product')}}">Products</a></li>
+
+                    <li><a href="{{url_for('contact')}}">Contact</a></li>
+                    {% if session.get('username') %}
+
+<!--                    <li>-->
+<!--                        Welcome {{ session['username'] }}-->
+<!--                    </li>-->
+
+                    <li>
+                        <a href="{{ url_for('logout') }}">
+                            Logout
+                        </a>
+                    </li>
+
+                    {% else %}
+
+                    <li>
+                        <a href="{{ url_for('account') }}">
+                            Account
+                        </a>
+                    </li>
+
+                    {% endif %}
+
+                </ul>
+            </nav>
+           <a href="{{url_for('cart')}}"><img src="static/images/cart.png" width="50px" ></a>
+           <img src="static/images/menu.png" class="menu-icon" onclick="menutoggle()" >
+        </div>
+    </div>
+
+    
+    <div class="small-container">
+    
+    <h2 class="title">Checkout</h2>
+    
+    <div class="checkout-row">
+    
+    <div class="billing">
+    
+    <h3>Shipping Information</h3>
+    
+    <form id="checkoutForm">
+
+    <label>Full Name</label>
+    <input type="text" id="name" placeholder="Your Full Name">
+
+    <label>Email Address</label>
+    <input type="email" id="email" placeholder="your email address">
+
+    <label>Phone Number</label>
+    <input type="tel" id="phone" placeholder="Your contact number">
+
+    <label>Street Address</label>
+    <input type="text" id="address">
+
+    <label>City</label>
+    <input type="text" id="city">
+
+    <label>Province</label>
+    <input type="text" id="province">
+
+    <label>Postal Code</label>
+    <input type="text" id="code">
+
+    <label>Country</label>
+    <select id="country">
+        <option value="">Select Country</option>
+        <option value="Canada">Canada</option>
+        <option value="United States">United States</option>
+    </select>
+
+
+    <button type="submit" class="btn">
+        Place order
+    </button>
+
+</form>
+    </div></div></div>
+
+    <!-- PayPal Message -->
+<!--<div id="paypalDetails" style="display:none;">-->
+
+<!--    <p>You will be redirected to PayPal to complete payment.</p>-->
+
+<!--</div>-->
+
+
+<!--&lt;!&ndash; Cash on Delivery Message &ndash;&gt;-->
+<!--<div id="codDetails" style="display:none;">-->
+
+<!--    <p>You will pay when your order is delivered.</p>-->
+
+<!--</div>-->
+
+   
+<!-- ----------Footer--------------- -->
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="footer-col-1">
+                <h3>Download Our App</h3>
+                <p>Download App For Android and ios Mobile Phone.</p>
+                <div class="app-logo">
+                <img src="static/images/play-store.png">
+                <img src="static/images/app-store.png">
+            </div>
+            </div>
+            <div class="footer-col-3">
+                <h3>Useful Links:</h3>
+                <ul>
+                    <li>Coupons</li>
+                    <li>Blog Post</li>
+                    <li>Return Policy</li>
+                    <li>Join Afiiliate</li>
+                </ul>
+            </div>
+            <div class="footer-col-4">
+                <h3>Follow Us:</h3>
+                <ul>
+                    <li>Facebook</li>
+                    <li>Twitter</li>
+                    <li>Instagram</li>
+                    <li>Youtube</li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+        <p class="copyright">Copyright 2026 - ForHer Store</p>
+    </div>
+</div>
+
+<!------- Js for toggle menu------------  -->
+<script>
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    
+    let orderSummary = document.getElementById("orderSummary");
+    
+    let subtotal = 0;
+    
+    
+    cart.forEach(item => {
+    
+        let itemTotal = item.price * item.quantity;
+    
+        subtotal += itemTotal;
+    
+        orderSummary.innerHTML += `
+            <tr>
+                <td>${item.name} ${item.size ? "(" + item.size + ")" : ""} x ${item.quantity}</td>
+                <td>$${itemTotal}</td>
+            </tr>
+        `;
+    
+    });
+    
+    
+    // Calculate tax (example: 13%)
+    let tax = subtotal * 0.13;
+    
+    let total = subtotal + tax;
+    
+    
+    document.getElementById("tax").innerText = "$" + tax.toFixed(2);
+    
+    document.getElementById("total").innerText = "$" + total.toFixed(2);
+    
+    
+</script>
+ 
+    <!-- js for card------->
+<script>
+    
+    
+        
+    paymentOptions.forEach(option => {
+    
+        option.addEventListener("change", function(){
+    
+            // Hide everything first
+            cardDetails.style.display = "none";
+            paypalDetails.style.display = "none";
+            codDetails.style.display = "none";
+    
+    
+            // Show selected payment section
+            if(this.value === "credit" || this.value === "debit"){
+    
+                cardDetails.style.display = "block";
+    
+            }
+            else if(this.value === "paypal"){
+    
+                paypalDetails.style.display = "block";
+    
+            }
+            else if(this.value === "cod"){
+    
+                codDetails.style.display = "block";
+    
+            }
+    
+        });
+    
+    });
+</script>
+
+<!--  -->
+<script>
+
+    const checkoutForm = document.getElementById("checkoutForm");
+    
+    checkoutForm.addEventListener("submit", function(event){
+    
+        event.preventDefault();
+    
+        let name = document.getElementById("name").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let phone = document.getElementById("phone").value.trim();
+        let address = document.getElementById("address").value.trim();
+        let city = document.getElementById("city").value.trim();
+        let province = document.getElementById("province").value.trim();
+        let code = document.getElementById("code").value.trim();
+        let country = document.getElementById("country").value;
+    
+    
+        if (
+            name === "" ||
+            email === "" ||
+            phone === "" ||
+            address === "" ||
+            city === "" ||
+            province === "" ||
+            code === "" ||
+            country === ""
+        ) {
+    
+            alert("Please complete all delivery information before placing your order.");
+    
+            return;
+        }
+    
+    
+        alert("Shipping information saved!");
+    
+        window.location.href = "/payment";
+    
+    
+    });
+    
+</script>
+</body>
+</html>
